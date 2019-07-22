@@ -4,7 +4,10 @@ import { CardBackground, RoundView } from './components';
 import {
     View,
     Text,
-    Image
+    Image,
+    NativeModules,
+    TouchableWithoutFeedback,
+    Alert
 } from 'react-native';
 
 const style = {
@@ -15,28 +18,33 @@ const style = {
         marginTop: 4
     },
 
-    titleStyle: {
+    descriptionStyle: {
         flex: 2,
         marginLeft: 8,
-        marginRight: 8
+        marginRight: 8,
+        marginBottom: 8
     }
 }
 
 
 
-const Card = (model) => {
-    console.log(model)
-    console.log("oioioio")
+const Card = (item) => {
+    const model = item.model
+    const locale = NativeModules.SettingsManager.settings.AppleLocale
+    let date = new Date(model.publishedAt).toLocaleDateString(locale.replace('_', '-'))
+
     return (
         <View style={{alignItems: "center", flex: 1, height: 400}}>
-            <CardBackground>
-                <RoundView>
-                    <Image style={{flex: 6}}
-                    source={{uri: model.imageURL }}/>
-                    <Text style= {style.dateStyle}> { model.date } </Text>
-                    <Text style= {style.titleStyle} numberOfLines={5}> { model.description } </Text>
-                </RoundView>
-              </CardBackground>
+            <TouchableWithoutFeedback onPress={() => {Alert.alert('You tapped the button!')}}>
+                <CardBackground>
+                    <RoundView>
+                        <Image style={{flex: 6}}
+                        source={{uri: model.urlToImage }}/>
+                        <Text style= {style.dateStyle}> { date } </Text>
+                        <Text style= {style.descriptionStyle} numberOfLines={5}> { model.description } </Text>
+                    </RoundView>
+                </CardBackground>
+            </TouchableWithoutFeedback>
         </View>
     );
 }

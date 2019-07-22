@@ -13,7 +13,7 @@ const CardBackground = styled(RoundView)`
     background-color: white;
     box-shadow: 0px 10px 30px black;
     shadowOpacity: 0.1;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
 `
 
 export { RoundView, CardBackground }
